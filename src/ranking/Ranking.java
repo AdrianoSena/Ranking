@@ -25,7 +25,7 @@ public class Ranking {
 
     void ordenacao(Jogador[] vet, int cont) {
         Jogador aux = new Jogador();
-        for (int i = 0; i < cont; i++) {
+        for (int i = 0; i < cont-1; i++) {
             for (int j = i + 1; j < cont; j++) {
                 if (vet[i] != null) {
                     if (vet[i].pontuacao < vet[j].pontuacao) {
@@ -33,7 +33,7 @@ public class Ranking {
                         vet[i] = vet[j];
                         vet[j] = aux;
                     }
-                }
+               }
             }
         }
     }
@@ -63,8 +63,8 @@ public class Ranking {
             FileReader leitura = new FileReader(arquivo);
             BufferedReader leitura_buff = new BufferedReader(leitura);
             String linha = leitura_buff.readLine();
-            do {
-                if ((linha != null) && (cont < 10)) {
+            while (!linha.equals("")){
+                if (!linha.equals("") && (cont < 10)) {
                     Jogador user = new Jogador();
                     String[] line = linha.split(":");
                     user.nome = line[0];
@@ -73,11 +73,19 @@ public class Ranking {
                     cont++;
                 }
                 linha = leitura_buff.readLine();
-            } while (linha != null);//para quando a linha for igual a null
+            } //para quando a linha for igual a null
         } catch (IOException ex) {
             System.out.println("Erro na leitura");
         }
         System.out.println("Numero de jogadores no arquivo é de: " + cont);
+        
+        for (int i = 0; i < cont; i++) {
+            if (vetRanking[i] != null) {
+                System.out.println(vetRanking[i].nome + ":" + vetRanking[i].pontuacao);
+            }
+
+        }
+        
         ///Ordenação do vetor para a escrita do ranking
         if (cont < 10) {
             vetRanking[cont + 1] = player1;
@@ -92,12 +100,12 @@ public class Ranking {
         }
         rank.ordenacao(vetRanking, cont);///ordenação do vetor com a chamada do método
 
-        for (int i = 0; i < cont; i++) {
-            if (vetRanking[i] != null) {
-                System.out.println(vetRanking[i].nome + ":" + vetRanking[i].pontuacao);
-            }
-
-        }
+//        for (int i = 0; i < cont; i++) {
+//            if (vetRanking[i] != null) {
+//                System.out.println(vetRanking[i].nome + ":" + vetRanking[i].pontuacao);
+//            }
+//
+//        }
 
         try {
             //objeto que faz interação com o arquivo, o parametro é para que seja possível
