@@ -64,15 +64,16 @@ public class Ranking {
             BufferedReader leitura_buff = new BufferedReader(leitura);
             String linha = leitura_buff.readLine();
             do {
-                if (!(linha == null)) {
+                if ((linha != null) && (cont < 10)) {
                     Jogador user = new Jogador();
-                    user.nome = linha.split(":")[0];
-                    user.pontuacao = Integer.parseInt(linha.split(":")[1]);
+                    String[] line = linha.split(":");
+                    user.nome = line[0];
+                    user.pontuacao = Integer.parseInt(line[1]);
                     vetRanking[cont] = user;
-                    linha = leitura_buff.readLine();
                     cont++;
                 }
-            } while (linha != null && cont != 10);//para quando a linha for igual a null
+                linha = leitura_buff.readLine();
+            } while (linha != null);//para quando a linha for igual a null
         } catch (IOException ex) {
             System.out.println("Erro na leitura");
         }
@@ -83,7 +84,7 @@ public class Ranking {
             cont++;
             vetRanking[cont] = player2;
             rank.ordenacao(vetRanking, cont); ///ordenação do vetor com a chamada do método
-        }  
+        }
         if (player1.pontuacao > player2.pontuacao) {
             vetRanking[cont + 1] = player1;
         } else {
