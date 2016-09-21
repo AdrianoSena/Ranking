@@ -15,8 +15,8 @@ import java.io.IOException;
 
 class Jogador {
 
-    String nome = "ronisson";
-    int pontuacao = 76;
+    String nome;
+    int pontuacao;
 }
 
 public class Ranking {
@@ -44,7 +44,7 @@ public class Ranking {
 
     void OrdenarRanking(Jogador player1, Jogador player2) {
 
-        Jogador[] vetRanking = new Jogador[11];
+        Jogador[] vetRanking = new Jogador[12];
         int cont = 0;
 
         File diretorio = new File("Arquivos Jogador");
@@ -63,7 +63,6 @@ public class Ranking {
             FileReader leitura = new FileReader(arquivo);
             BufferedReader leitura_buff = new BufferedReader(leitura);
             String linha = leitura_buff.readLine();
-
             do {
                 if (!(linha == null)) {
                     Jogador user = new Jogador();
@@ -73,27 +72,26 @@ public class Ranking {
                     linha = leitura_buff.readLine();
                     cont++;
                 }
-            } while (linha != null && cont<10);//para quando a linha for igual a null
-
+            } while (linha != null && cont != 10);//para quando a linha for igual a null
         } catch (IOException ex) {
             System.out.println("Erro na leitura");
         }
-
         System.out.println("Numero de jogadores no arquivo é de: " + cont);
         ///Ordenação do vetor para a escrita do ranking
-        if (cont<10) {
+        if (cont < 10) {
             vetRanking[cont + 1] = player1;
             cont++;
             vetRanking[cont] = player2;
-//            rank.ordenacao(vetRanking, cont); ///ordenação do vetor com a chamada do método
-        } else if (player1.pontuacao > player2.pontuacao) {
+            rank.ordenacao(vetRanking, cont); ///ordenação do vetor com a chamada do método
+        }  
+        if (player1.pontuacao > player2.pontuacao) {
             vetRanking[cont + 1] = player1;
         } else {
             vetRanking[cont + 1] = player2;
-        } 
-//            rank.ordenacao(vetRanking, cont);///ordenação do vetor com a chamada do método
+        }
+        rank.ordenacao(vetRanking, cont);///ordenação do vetor com a chamada do método
 
-        for (int i = 0; i < vetRanking.length; i++) {
+        for (int i = 0; i < cont; i++) {
             if (vetRanking[i] != null) {
                 System.out.println(vetRanking[i].nome + ":" + vetRanking[i].pontuacao);
             }
@@ -103,7 +101,7 @@ public class Ranking {
         try {
             //objeto que faz interação com o arquivo, o parametro é para que seja possível
             //continuar escrevendo no arquivo
-            FileWriter arquivoEscreva = new FileWriter(arquivo, true);
+            FileWriter arquivoEscreva = new FileWriter(arquivo);
             //objeto que faz a escrita no arquivo
             BufferedWriter escreva = new BufferedWriter(arquivoEscreva);
 
@@ -118,15 +116,14 @@ public class Ranking {
         } catch (IOException ex) {
             System.out.println("Falha na escrita do nome");
         }
-
     }
 
     public static void main(String[] args) {
         // TODO code application logic here
 
         Jogador jogador1 = new Jogador();
-        jogador1.nome = "lucas";
-        jogador1.pontuacao = 3000;
+        jogador1.nome = "Herbert";
+        jogador1.pontuacao = 9000;
 
         Jogador jogador2 = new Jogador();
         jogador1.nome = "Ronisson";
